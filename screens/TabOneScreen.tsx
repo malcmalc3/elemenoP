@@ -1,32 +1,59 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { NativeSyntheticEvent, StyleSheet, TextInputKeyPressEventData, View } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
-
-export default function TabOneScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
-    </View>
-  );
-}
+import { Input, Text } from 'react-native-elements';
+import { useDimensions } from '../hooks/useDimensions';
+import { useKeyboard } from '../hooks/useKeyboard';
+import { useEffect, useState } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
   separator: {
     marginVertical: 30,
     height: 1,
     width: '80%',
   },
 });
+
+export default function TabOneScreen() {
+  const insets = useSafeAreaInsets();
+
+  const { window } = useDimensions();
+  const { keyboardHeight } = useKeyboard();
+
+  const [text, setText] = useState('');
+  const [inputRef, setInputRef] = useState<Input | null>(null);
+
+  const handleKeyDown = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+    console.log(e.nativeEvent.key);
+    if(e.nativeEvent.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    inputRef?.focus();
+  }, [inputRef])
+  
+  return (
+    <View style={{
+      flex: 1,
+      paddingTop: insets.top,
+      height: (window.height - keyboardHeight),
+      backgroundColor: '#00BCFF',
+    }}>
+      <Text h1 style={{ color: 'white' }}>2</Text>
+      <Input
+        style={{ height: 0, width: 0, borderWidth: 0 }}
+        blurOnSubmit={false}
+        caretHidden
+        value=""
+        onKeyPress={handleKeyDown}
+        ref={ref => setInputRef(ref)}
+        autoCapitalize="none"
+        autoCorrect={false}
+        autoFocus={false}
+      />
+    </View>
+  );
+}
