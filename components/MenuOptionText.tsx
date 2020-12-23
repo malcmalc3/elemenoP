@@ -53,7 +53,7 @@ export default function MenuOptionText({
     }}>
       <Text
         h1
-        style={{ color: 'green', textAlign: 'center' }}
+        style={{ color: 'green', textAlign: 'center', fontFamily: 'Minigame' }}
       >
         {stringToMatch.substring(0, matchingString.length)}
         <Text

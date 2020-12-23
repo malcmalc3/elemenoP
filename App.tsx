@@ -5,11 +5,18 @@ import useCachedResources from './hooks/useCachedResources';
 import { ThemeProvider } from 'react-native-elements';
 import TabOneScreen from './screens/TabOneScreen';
 import { KeyboardProvider } from './contexts/KeyboardProvider';
+import { useFonts } from 'expo-font';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
-  if (!isLoadingComplete) {
+  const [fontsLoaded] = useFonts({
+    'Minigame': require('./assets/fonts/Minigame.otf'),
+    'Minigame Italic': require('./assets/fonts/Minigame Italic.otf'),
+    'Minigame Oblique': require('./assets/fonts/Minigame Oblique.otf'),
+  });
+
+  if (!isLoadingComplete || !fontsLoaded) {
     return null;
   } else {
     return (
