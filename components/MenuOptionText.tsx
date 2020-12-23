@@ -53,13 +53,23 @@ export default function MenuOptionText({
     }}>
       <Text
         h1
-        style={{ color: 'green', textAlign: 'center', fontFamily: 'Minigame' }}
+        style={{
+          color: 'white',
+          textAlign: 'center',
+          fontFamily: 'Minigame',
+        }}
       >
-        {stringToMatch.substring(0, matchingString.length)}
         <Text
-          h1
-          style={{ color: 'white' }}
+          style={{
+            color: '#AAFFAA',
+            textShadowColor: 'rgba(0, 255, 0, 1)',
+            textShadowOffset: {width: -1, height: 1},
+            textShadowRadius: 6,
+          }}
         >
+          {stringToMatch.substring(0, matchingString.length)}
+        </Text>
+        <Text style={{ color: 'white' }}>
           {stringToMatch.substring(matchingString.length)}
         </Text>
       </Text>

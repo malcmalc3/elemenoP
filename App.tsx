@@ -12,8 +12,8 @@ export default function App() {
 
   const [fontsLoaded] = useFonts({
     'Minigame': require('./assets/fonts/Minigame.otf'),
-    'Minigame Italic': require('./assets/fonts/Minigame Italic.otf'),
-    'Minigame Oblique': require('./assets/fonts/Minigame Oblique.otf'),
+    'Minigame-Italic': require('./assets/fonts/Minigame-Italic.otf'),
+    'Minigame-Oblique': require('./assets/fonts/Minigame-Oblique.otf'),
   });
 
   if (!isLoadingComplete || !fontsLoaded) {
