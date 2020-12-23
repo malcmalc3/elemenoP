@@ -3,20 +3,22 @@ import { Keyboard, NativeSyntheticEvent, TextInputKeyPressEventData, KeyboardEve
 import { Input } from 'react-native-elements';
 
 interface KeyboardContextTypes {
-  lastKey: string,
-  keyboardHeight: number,
+  lastKey: string;
+  repeats: number;
+  keyboardHeight: number;
 };
 
 const KeyboardContext = createContext<KeyboardContextTypes>({
   lastKey: '',
+  repeats: 0,
   keyboardHeight: 0,
 });
 
-type Props = {
-  children: ReactNode
+interface KeyboardProviderProps {
+  children: ReactNode;
 };
 
-export const KeyboardProvider = ({ children }: Props) => {
+export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
   /** Keyboard height section */
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -39,13 +41,18 @@ export const KeyboardProvider = ({ children }: Props) => {
 
   /** lastKey section: holds the last key pressed */
   const [lastKey, setLastKey] = useState('');
+  const [repeats, setRepeats] = useState(0);
   const [inputRef, setInputRef] = useState<Input | null>(null);
 
-  const handleKeyDown = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-    if(e.nativeEvent.key === 'Enter') {
-      e.preventDefault();
+  const handleKeyDown = (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+    const key = event.nativeEvent.key;
+    if(key === 'Enter') {
+      event.preventDefault();
     }
-    setLastKey(e.nativeEvent.key);
+    setLastKey((prevKey) => {
+      key === prevKey ? setRepeats((prevRepeats) => prevRepeats + 1) : setRepeats(0);
+      return key;
+    });
   };
 
   useEffect(() => {
@@ -53,7 +60,7 @@ export const KeyboardProvider = ({ children }: Props) => {
   }, [inputRef])
 
   return (
-    <KeyboardContext.Provider value={{lastKey, keyboardHeight}}>
+    <KeyboardContext.Provider value={{lastKey, repeats, keyboardHeight}}>
       {children}
       <Input
         style={{ height: 0, width: 0, borderWidth: 0, position: "absolute", left: 1000 }}

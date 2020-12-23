@@ -6,6 +6,7 @@ import { useDimensions } from '../hooks/useDimensions';
 import { useKeyboard } from '../contexts/KeyboardProvider';
 import { useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MenuOptionText from '../components/MenuOptionText';
 
 const styles = StyleSheet.create({
   separator: {
@@ -19,20 +20,37 @@ export default function TabOneScreen() {
   const insets = useSafeAreaInsets();
 
   const { window } = useDimensions();
-  const { lastKey, keyboardHeight } = useKeyboard();
+  const { keyboardHeight } = useKeyboard();
   
   useEffect(() => {
-    console.log(lastKey);
-  }, [lastKey]);
+    console.log(keyboardHeight);
+  }, [keyboardHeight]);
   
   return (
-    <View style={{
-      flex: 1,
-      paddingTop: insets.top,
-      height: (window.height - keyboardHeight),
-      backgroundColor: '#00BCFF',
-    }}>
-      <Text h1 style={{ color: 'white' }}>2</Text>
+    <View>
+      <View style={{
+        paddingTop: insets.top,
+        height: (window.height - keyboardHeight),
+        backgroundColor: '#00BCFF',
+      }}>
+        <Text h1 style={{ color: 'white' }}>2</Text>
+        <MenuOptionText
+          stringToMatch='play'
+          onMatch={() => console.log('Go to play')}
+        />
+        <MenuOptionText
+          stringToMatch='how to'
+          onMatch={() => console.log('Go to how to')}
+        />
+        <MenuOptionText
+          stringToMatch='stats'
+          onMatch={() => console.log('Go to stats')}
+        />
+        <MenuOptionText
+          stringToMatch='shop'
+          onMatch={() => console.log('Go to shop')}
+        />
+      </View>
     </View>
   );
 }
