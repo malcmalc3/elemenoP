@@ -47,12 +47,12 @@ export default function MenuOptionText({
       display: 'flex',
       alignContent: 'center',
       justifyContent: 'center',
-      borderWidth: 1,
+      // borderWidth: 1,
       // paddingTop: insets.top,
       // height: (window.height - keyboardHeight),
     }}>
       <Text
-        h1
+        h2
         style={{
           color: 'white',
           textAlign: 'center',

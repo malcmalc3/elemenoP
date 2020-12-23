@@ -6,6 +6,7 @@ import { ThemeProvider } from 'react-native-elements';
 import TabOneScreen from './screens/TabOneScreen';
 import { KeyboardProvider } from './contexts/KeyboardProvider';
 import { useFonts } from 'expo-font';
+import { NavigationProvider } from './contexts/NavigationProvider';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -22,9 +23,11 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <ThemeProvider>
-          <KeyboardProvider>
-            <TabOneScreen />
-          </KeyboardProvider>
+          <NavigationProvider>
+            <KeyboardProvider>
+              <TabOneScreen />
+            </KeyboardProvider>
+          </NavigationProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     );
