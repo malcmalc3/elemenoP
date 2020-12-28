@@ -30,7 +30,7 @@ export default function TabOneScreen() {
     <View>
       <View style={{
         paddingTop: insets.top,
-        paddingBottom: insets.top * 2,
+        paddingBottom: insets.top,
         height: (window.height - keyboardHeight),
         backgroundColor: '#00BCFF',
       }}>

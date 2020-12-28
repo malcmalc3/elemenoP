@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { Text } from 'react-native-elements';
+import { Icon, Text, ThemeContext } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MenuOptionText from '../../components/MenuOptionText';
 import { useNavigation } from '../../contexts/NavigationProvider';
@@ -16,8 +17,18 @@ const styles = StyleSheet.create({
 
 export default function MainMenu() {
   const insets = useSafeAreaInsets();
+  const { theme } = useContext(ThemeContext);
 
   const { setCurrentScreen } = useNavigation();
+
+  const [showHelper, setShowHelper] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowHelper(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
   
   return (
     <>
@@ -54,6 +65,17 @@ export default function MainMenu() {
         stringToMatch='shop'
         onMatch={() => setCurrentScreen('Shop')}
       />
+      <View
+        style={{
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          opacity: showHelper ? 1 : 0,
+          marginTop: 16,
+        }}>
+        <Icon type="feather" name='info' color={theme.colors?.grey5}/>
+        <Text style={{ color: theme.colors?.grey5, marginLeft: 4 }}>Type "play" to play</Text>
+      </View>
     </>
   );
 }
