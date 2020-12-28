@@ -8,6 +8,19 @@ import { KeyboardProvider } from './contexts/KeyboardProvider';
 import { useFonts } from 'expo-font';
 import { NavigationProvider } from './contexts/NavigationProvider';
 
+const theme = {
+  colors: {
+    primary: '#0076BE', //Blue
+    secondary: '#48BF91', //Green
+  },
+  Text: {
+    style: {
+      color: 'white',
+      fontFamily: 'Minigame',
+    },
+  },
+};
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
 
@@ -22,7 +35,7 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <ThemeProvider>
+        <ThemeProvider theme={theme}>
           <NavigationProvider>
             <KeyboardProvider>
               <TabOneScreen />
