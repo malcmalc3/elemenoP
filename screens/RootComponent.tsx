@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function TabOneScreen() {
+export default function RootComponent() {
   const insets = useSafeAreaInsets();
 
   const { window } = useDimensions();
