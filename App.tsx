@@ -3,10 +3,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './hooks/useCachedResources';
 import { ThemeProvider } from 'react-native-elements';
-import RootComponent from './screens/RootComponent';
 import { KeyboardProvider } from './contexts/KeyboardProvider';
 import { useFonts } from 'expo-font';
 import { NavigationProvider } from './contexts/NavigationProvider';
+import RootComponent from './screens/RootComponent';
 
 const theme = {
   colors: {

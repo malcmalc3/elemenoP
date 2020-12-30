@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-
-import MenuOptionText from '../../components/MenuOptionText';
-import { useNavigation } from '../../contexts/NavigationProvider';
+import BackButton from '../../components/BackButton';
 
 const styles = StyleSheet.create({
   titleText: {
@@ -12,15 +10,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function PlayMenu() {
-  const { setCurrentScreen } = useNavigation();
-  
+export default function PlayMenu() {  
   return (
     <>
-      <MenuOptionText
-        stringToMatch='back'
-        onMatch={() => setCurrentScreen('Main Menu')}
-      />
+      <BackButton previousScreen='Main Menu' />
     </>
   );
 }

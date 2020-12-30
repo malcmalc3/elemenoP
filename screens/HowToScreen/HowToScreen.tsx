@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import BackButton from '../../components/BackButton';
 
 import MenuOptionText from '../../components/MenuOptionText';
 import { useNavigation } from '../../contexts/NavigationProvider';
@@ -17,10 +18,7 @@ export default function HowToScreen() {
   
   return (
     <>
-      <MenuOptionText
-        stringToMatch='back'
-        onMatch={() => setCurrentScreen('Main Menu')}
-      />
+      <BackButton previousScreen='Main Menu' />
     </>
   );
 }

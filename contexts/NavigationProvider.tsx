@@ -1,6 +1,5 @@
 import React, { ReactNode, useState, createContext, useContext } from 'react';
-
-type AvailableScreens = 'Main Menu' | 'Play Menu' | 'How To' | 'Stats' | 'Shop';
+import { AvailableScreens } from '../types';
 
 interface NavigationContextTypes {
   currentScreen: AvailableScreens;

@@ -47,15 +47,17 @@ export default function MenuOptionText({
   }, [matchingString]);
   
   return (
-    <View style={{
-      flex: 1,
-      display: 'flex',
-      alignContent: 'center',
-      justifyContent: 'center',
-      // borderWidth: 1,
-      // paddingTop: insets.top,
-      // height: (window.height - keyboardHeight),
-    }}>
+    <View
+      style={{
+        flex: 1,
+        display: 'flex',
+        alignContent: 'center',
+        justifyContent: 'center',
+        // borderWidth: 1,
+        // paddingTop: insets.top,
+        // height: (window.height - keyboardHeight),
+      }}
+    >
       <Text h2 style={{ textAlign: 'center' }}>
         <Text
           style={{
