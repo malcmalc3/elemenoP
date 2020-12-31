@@ -10,6 +10,8 @@ import PlayMenu from './PlayMenu/PlayMenu';
 import HowToScreen from './HowToScreen/HowToScreen';
 import StatsScreen from './StatsScreen/StatsScreen';
 import ShopScreen from './ShopScreen/ShopScreen';
+import PracticePlay from './PlayScreens/PracticePlay';
+import VersusPlay from './PlayScreens/VersusPlay';
 
 const styles = StyleSheet.create({
   separator: {
@@ -38,6 +40,8 @@ export default function RootComponent() {
         {currentScreen === 'How To' && (<HowToScreen />)}
         {currentScreen === 'Stats' && (<StatsScreen />)}
         {currentScreen === 'Shop' && (<ShopScreen />)}
+        {currentScreen === 'Pactice Play' && (<PracticePlay />)}
+        {currentScreen === 'Versus Play' && (<VersusPlay />)}
       </View>
     </View>
   );

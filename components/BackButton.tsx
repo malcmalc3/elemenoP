@@ -16,7 +16,6 @@ export default function BackButton({ previousScreen }: BackButtonProps) {
       style={{
         width: 100,
         height: 60,
-        borderWidth: 1,
       }}
     >
       <MenuOptionText
