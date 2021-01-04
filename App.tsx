@@ -7,6 +7,7 @@ import { KeyboardProvider } from './contexts/KeyboardProvider';
 import { useFonts } from 'expo-font';
 import { NavigationProvider } from './contexts/NavigationProvider';
 import RootComponent from './screens/RootComponent';
+import { UserProfileProvider } from './contexts/UserProfileProvider';
 
 const theme = {
   colors: {
@@ -38,7 +39,9 @@ export default function App() {
         <ThemeProvider theme={theme}>
           <NavigationProvider>
             <KeyboardProvider>
-              <RootComponent />
+              <UserProfileProvider>
+                <RootComponent />
+              </UserProfileProvider>
             </KeyboardProvider>
           </NavigationProvider>
         </ThemeProvider>

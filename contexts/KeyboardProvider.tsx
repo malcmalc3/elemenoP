@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, createContext, useEffect, useContext } from 'react';
+import React, { ReactNode, useState, createContext, useEffect, useContext, useCallback } from 'react';
 import { Keyboard, NativeSyntheticEvent, TextInputKeyPressEventData, KeyboardEvent } from 'react-native';
 import { Input } from 'react-native-elements';
 
@@ -44,16 +44,21 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
   const [repeats, setRepeats] = useState(0);
   const [inputRef, setInputRef] = useState<Input | null>(null);
 
+  const handleEnterKey = useCallback(() => {
+    setLastKey(':Enter:');
+  }, []);
+
   const handleKeyDown = (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     const key = event.nativeEvent.key;
-    if(key === 'Enter') {
-      event.preventDefault();
-    }
     setLastKey((prevKey) => {
       key === prevKey ? setRepeats((prevRepeats) => prevRepeats + 1) : setRepeats(0);
       return key;
     });
   };
+
+  const handleLostFocus = useCallback(() => {
+    inputRef?.focus();
+  }, [inputRef]);
 
   useEffect(() => {
     inputRef?.focus();
@@ -65,6 +70,8 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
       <Input
         style={{ height: 0, width: 0, borderWidth: 0, position: "absolute", left: 1000 }}
         blurOnSubmit={false}
+        onBlur={handleLostFocus}
+        onSubmitEditing={handleEnterKey}
         caretHidden
         value=""
         onKeyPress={handleKeyDown}

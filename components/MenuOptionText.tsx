@@ -18,27 +18,31 @@ const styles = StyleSheet.create({
 interface MenuOptionTextProps {
   stringToMatch: string;
   onMatch: VoidFunction;
+  active?: boolean;
 }
 
 export default function MenuOptionText({
   stringToMatch,
   onMatch,
+  active = true,
 }: MenuOptionTextProps) {
   const { theme } = useContext(ThemeContext);
   const [matchingString, setMatchingString] = useState('');
   const { lastKey, repeats } = useKeyboard();
 
   useEffect(() => {
-    setMatchingString((prev) => {
-      if (lastKey === 'Backspace') {
-        return prev.slice(0, -1);
-      }
-      if (stringToMatch.toLowerCase().startsWith(prev + lastKey.toLowerCase())) {
-        return `${prev}${lastKey.toLowerCase()}`;
-      }
-      return '';
-    });
-  }, [lastKey, repeats]);
+    if (active) {
+      setMatchingString((prev) => {
+        if (lastKey === 'Backspace') {
+          return prev.slice(0, -1);
+        }
+        if (stringToMatch.toLowerCase().startsWith(prev + lastKey.toLowerCase())) {
+          return `${prev}${lastKey.toLowerCase()}`;
+        }
+        return '';
+      });
+    }
+  }, [active, lastKey, repeats]);
 
   useEffect(() => {
     if (matchingString.toLowerCase() === stringToMatch.toLowerCase()) {
@@ -47,17 +51,17 @@ export default function MenuOptionText({
   }, [matchingString]);
   
   return (
-    <View
-      style={{
-        flex: 1,
-        display: 'flex',
-        alignContent: 'center',
-        justifyContent: 'center',
-        // borderWidth: 1,
-        // paddingTop: insets.top,
-        // height: (window.height - keyboardHeight),
-      }}
-    >
+    // <View
+    //   style={{
+    //     flex: 1,
+    //     display: 'flex',
+    //     alignContent: 'center',
+    //     justifyContent: 'center',
+    //     // borderWidth: 1,
+    //     // paddingTop: insets.top,
+    //     // height: (window.height - keyboardHeight),
+    //   }}
+    // >
       <Text h2 style={{ textAlign: 'center' }}>
         <Text
           style={{
@@ -76,6 +80,6 @@ export default function MenuOptionText({
           {stringToMatch.substring(matchingString.length + 1)}
         </Text>
       </Text>
-    </View>
+    // </View>
   );
 }

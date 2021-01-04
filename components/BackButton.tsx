@@ -6,9 +6,13 @@ import MenuOptionText from './MenuOptionText';
 
 interface BackButtonProps {
   previousScreen: AvailableScreens;
+  active?: boolean;
 };
 
-export default function BackButton({ previousScreen }: BackButtonProps) {
+export default function BackButton({
+  previousScreen,
+  active = true,
+}: BackButtonProps) {
   const { setCurrentScreen } = useNavigation();
   
   return (
@@ -21,6 +25,7 @@ export default function BackButton({ previousScreen }: BackButtonProps) {
       <MenuOptionText
         stringToMatch='back'
         onMatch={() => setCurrentScreen(previousScreen)}
+        active={active}
       />
     </View>
   );
