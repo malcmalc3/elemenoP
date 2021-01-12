@@ -3,5 +3,5 @@ export type AvailableScreens = 'Main Menu'
 | 'How To' 
 | 'Stats' 
 | 'Shop'
-| 'Pactice Play'
+| 'Solo Play'
 | 'Versus Play';

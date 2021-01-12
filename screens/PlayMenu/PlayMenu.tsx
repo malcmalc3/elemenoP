@@ -50,8 +50,8 @@ export default function PlayMenu() {
           active={!editingName}
         />
         <MenuOptionText
-          stringToMatch='practice'
-          onMatch={() => setCurrentScreen('Pactice Play')}
+          stringToMatch='solo'
+          onMatch={() => setCurrentScreen('Solo Play')}
           active={!editingName}
         />
         <Text h2 style={{opacity: 0}}>Filler</Text>
