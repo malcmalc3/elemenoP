@@ -41,7 +41,7 @@ export default function EditNameField({
   useEffect(() => {
     if (editingName) {
       setInputValue((prev) => {
-        if (lastKey === 'Backspace') {
+        if (lastKey === ':Backspace:') {
           return prev.slice(0, -1);
         }
         if (prev.length >= 25) {

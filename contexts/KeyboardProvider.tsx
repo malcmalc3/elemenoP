@@ -51,7 +51,10 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
   }, []);
 
   const handleKeyDown = (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-    const key = event.nativeEvent.key;
+    let key = event.nativeEvent.key;
+    if (key === 'Backspace') {
+      key = ':Backspace:';
+    }
     setLastKey((prevKey) => {
       key === prevKey ? setRepeats((prevRepeats) => prevRepeats + 1) : setRepeats(0);
       return key;

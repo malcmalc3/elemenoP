@@ -33,7 +33,7 @@ export default function MenuOptionText({
   useEffect(() => {
     if (active) {
       setMatchingString((prev) => {
-        if (lastKey === 'Backspace') {
+        if (lastKey === ':Backspace:') {
           return prev.slice(0, -1);
         }
         if (stringToMatch.toLowerCase().startsWith(prev + lastKey.toLowerCase())) {
