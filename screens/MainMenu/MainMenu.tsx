@@ -20,7 +20,7 @@ export default function MainMenu() {
   const insets = useSafeAreaInsets();
   const { theme } = useContext(ThemeContext);
 
-  const { setCurrentScreen } = useNavigation();
+  const { setScreen } = useNavigation();
   
   return (
     <>
@@ -43,19 +43,19 @@ export default function MainMenu() {
       </View>
       <MenuOptionText
         stringToMatch='play'
-        onMatch={() => setCurrentScreen('Play Menu')}
+        onMatch={() => setScreen('Play Menu')}
       />
       <MenuOptionText
         stringToMatch='how to'
-        onMatch={() => setCurrentScreen('How To')}
+        onMatch={() => setScreen('How To')}
       />
       <MenuOptionText
         stringToMatch='stats'
-        onMatch={() => setCurrentScreen('Stats')}
+        onMatch={() => setScreen('Stats')}
       />
       <MenuOptionText
         stringToMatch='shop'
-        onMatch={() => setCurrentScreen('Shop')}
+        onMatch={() => setScreen('Shop')}
       />
       <HelperText />
     </>

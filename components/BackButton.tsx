@@ -13,7 +13,7 @@ export default function BackButton({
   previousScreen,
   active = true,
 }: BackButtonProps) {
-  const { setCurrentScreen } = useNavigation();
+  const { setScreen } = useNavigation();
   
   return (
     <View
@@ -24,7 +24,7 @@ export default function BackButton({
     >
       <MenuOptionText
         stringToMatch='back'
-        onMatch={() => setCurrentScreen(previousScreen)}
+        onMatch={() => setScreen(previousScreen)}
         active={active}
       />
     </View>

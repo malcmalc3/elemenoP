@@ -37,13 +37,13 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <ThemeProvider theme={theme}>
-          <NavigationProvider>
-            <KeyboardProvider>
+          <KeyboardProvider>
+            <NavigationProvider>
               <UserProfileProvider>
                 <RootComponent />
               </UserProfileProvider>
-            </KeyboardProvider>
-          </NavigationProvider>
+            </NavigationProvider>
+          </KeyboardProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     );

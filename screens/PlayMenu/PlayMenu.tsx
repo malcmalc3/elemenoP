@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 export default function PlayMenu() {
-  const { setCurrentScreen } = useNavigation();
+  const { setScreen } = useNavigation();
   const [editingName, setEditingName] = useState(false);
 
   return (
@@ -36,22 +36,22 @@ export default function PlayMenu() {
       >
         <MenuOptionText
           stringToMatch='online'
-          onMatch={() => setCurrentScreen('Versus Play')}
+          onMatch={() => setScreen('Versus Play')}
           active={!editingName}
         />
         <MenuOptionText
           stringToMatch='host private'
-          onMatch={() => setCurrentScreen('Versus Play')}
+          onMatch={() => setScreen('Versus Play')}
           active={!editingName}
         />
         <MenuOptionText
           stringToMatch='join private'
-          onMatch={() => setCurrentScreen('Versus Play')}
+          onMatch={() => setScreen('Versus Play')}
           active={!editingName}
         />
         <MenuOptionText
           stringToMatch='solo'
-          onMatch={() => setCurrentScreen('Solo Play')}
+          onMatch={() => setScreen('Solo Play')}
           active={!editingName}
         />
         <Text h2 style={{opacity: 0}}>Filler</Text>

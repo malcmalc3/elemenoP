@@ -6,12 +6,14 @@ interface KeyboardContextTypes {
   lastKey: string;
   repeats: number;
   keyboardHeight: number;
+  clearKeyboard: VoidFunction;
 };
 
 const KeyboardContext = createContext<KeyboardContextTypes>({
   lastKey: '',
   repeats: 0,
   keyboardHeight: 0,
+  clearKeyboard: () => {},
 });
 
 interface KeyboardProviderProps {
@@ -56,6 +58,10 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
     });
   };
 
+  const clearKeyboard = useCallback(() => {
+    setLastKey(':Empty:');
+  }, []);
+
   const handleLostFocus = useCallback(() => {
     inputRef?.focus();
   }, [inputRef]);
@@ -65,7 +71,7 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
   }, [inputRef])
 
   return (
-    <KeyboardContext.Provider value={{lastKey, repeats, keyboardHeight}}>
+    <KeyboardContext.Provider value={{lastKey, repeats, keyboardHeight, clearKeyboard}}>
       {children}
       <Input
         style={{ height: 0, width: 0, borderWidth: 0, position: "absolute", left: 1000 }}

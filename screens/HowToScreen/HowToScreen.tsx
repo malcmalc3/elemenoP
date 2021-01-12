@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 });
 
 export default function HowToScreen() {
-  const { setCurrentScreen } = useNavigation();
+  const { setScreen } = useNavigation();
   
   return (
     <>
