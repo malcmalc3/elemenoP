@@ -1,9 +1,17 @@
-import * as React from 'react';
-import { Animated, LayoutChangeEvent, StyleSheet } from 'react-native';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { LayoutChangeEvent, StyleSheet } from 'react-native';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from 'react-native-reanimated';
 import { Text, ThemeContext } from 'react-native-elements';
-import { useCallback, useRef, useState } from 'react';
-import { useEffect } from 'react';
-import { useContext } from 'react';
 import { pointValues } from '../../utils/points';
 
 const styles = StyleSheet.create({
@@ -25,6 +33,9 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 6,
   },
+  pointsText: {
+    position: 'absolute',
+  }
 });
 
 const animationDuration = 500;
@@ -48,25 +59,39 @@ export default function GameChar({
   const { theme } = useContext(ThemeContext);
 
   const [pointValue, setPointValue] = useState(0);
-  const charPositionRef = useRef({ x: 0, y: 0 });
-  const [pointsOpacity] = useState(new Animated.Value(0));
-  const [pointsPosition] = useState(new Animated.ValueXY(undefined));
+  const [pointsPosX, setPointsPosX] = useState(0);
+  const [showPoints, setShowPoints] = useState(false);
+  const posY = useSharedValue(yStartOffset);
+  const opacity = useSharedValue(0);
 
   const measureChar = useCallback((event: LayoutChangeEvent) => {
     const layout = event.nativeEvent.layout;
-    charPositionRef.current = { x: layout.x, y: layout.y }
+    setPointsPosX(layout.x + (layout.width / 4));
   }, []);
-
-  const positionPoints = useCallback(() => {
-    pointsPosition.setValue({
-      x: charPositionRef.current.x,
-      y: charPositionRef.current.y + yStartOffset,
-    });
-  }, [pointsPosition]);
+  
+  const pointsAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      top: withTiming(
+        posY.value,
+        { duration: animationDuration },
+        () => runOnJS(setShowPoints)(false),
+      ),
+      opacity: withTiming(
+        opacity.value,
+        { duration: animationDuration },
+      ),
+    };
+  });
 
   useEffect(() => {
-    positionPoints();
-  }, [charPositionRef.current, positionPoints]);
+    if (showPoints) {
+      opacity.value = 1;
+      posY.value = yEndOffset;
+    } else {
+      opacity.value = 0;
+      posY.value = yStartOffset;
+    }
+  }, [showPoints]);
 
   const determineColor = useCallback(() => {
     if (currentLetter) {
@@ -80,29 +105,6 @@ export default function GameChar({
     }
   }, [currentLetter, userTypedCorrectly]);
 
-  const fadeOutPoints = () => {
-    pointsOpacity.setValue(1)
-    Animated.timing(pointsOpacity, {
-      toValue: 0,
-      duration: animationDuration,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const translatePointsUp = () => {
-    Animated.timing(pointsPosition, {
-      toValue: {
-        x: charPositionRef.current.x,
-        y: charPositionRef.current.y + yEndOffset,
-      },
-      duration: animationDuration,
-      useNativeDriver: true,
-    }).start(() => {
-      // Logic whenever an iteration finishes...
-      positionPoints();
-    });
-  };
-
   useEffect(() => {
     if (userTypedCorrectly !== undefined) {
       if (userTypedCorrectly) {
@@ -110,8 +112,7 @@ export default function GameChar({
       } else {
         setPointValue(pointValues.incorrect);
       }
-      fadeOutPoints();
-      translatePointsUp();
+      setShowPoints(true);
     }
   }, [userTypedCorrectly]);
   
@@ -124,22 +125,25 @@ export default function GameChar({
       >
         {char}
       </Text>
-      <Animated.Text
-        style={{
-          position: 'absolute',
-          left: 0,
-          paddingLeft: 2,
-          opacity: pointsOpacity,
-          transform: [
-            { translateX: pointsPosition.x },
-            { translateY: pointsPosition.y },
-          ]
-        }}
-      >
-        <Text h4 style={{...determineColor(), textShadowRadius: 0}}>
-          {Math.abs(pointValue)}
-        </Text>
-      </Animated.Text>
+      {showPoints && (
+        <Animated.Text
+          style={[
+            styles.pointsText,
+            { left: pointsPosX },
+            pointsAnimatedStyle,
+          ]}
+        >
+          <Text
+            h4
+            style={{
+              ...determineColor(),
+              textShadowRadius: 0,
+            }}
+          >
+            {Math.abs(pointValue)}
+          </Text>
+        </Animated.Text>
+      )}
     </>
   );
 }
