@@ -16,12 +16,7 @@ export default function BackButton({
   const { setScreen } = useNavigation();
   
   return (
-    <View
-      style={{
-        width: 100,
-        height: 60,
-      }}
-    >
+    <View style={{ alignSelf: 'flex-start' }}>
       <MenuOptionText
         stringToMatch='back'
         onMatch={() => setScreen(previousScreen)}

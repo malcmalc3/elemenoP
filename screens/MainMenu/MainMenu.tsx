@@ -27,8 +27,7 @@ export default function MainMenu() {
       <View style={{
         alignContent: 'center',
         justifyContent: 'center',
-        // borderWidth: 1,
-        height: insets.top * 8,
+        height: "40%",
       }}>
         <Text
           h1
@@ -41,23 +40,29 @@ export default function MainMenu() {
           elemenoP!
         </Text>
       </View>
-      <MenuOptionText
-        stringToMatch='play'
-        onMatch={() => setScreen('Play Menu')}
-      />
-      <MenuOptionText
-        stringToMatch='how to'
-        onMatch={() => setScreen('How To')}
-      />
-      <MenuOptionText
-        stringToMatch='stats'
-        onMatch={() => setScreen('Stats')}
-      />
-      <MenuOptionText
-        stringToMatch='shop'
-        onMatch={() => setScreen('Shop')}
-      />
-      <HelperText />
+      <View style={{
+        alignContent: 'center',
+        justifyContent: 'center',
+        height: "60%",
+      }}>
+        <MenuOptionText
+          stringToMatch='play'
+          onMatch={() => setScreen('Play Menu')}
+        />
+        <MenuOptionText
+          stringToMatch='how to'
+          onMatch={() => setScreen('How To')}
+        />
+        <MenuOptionText
+          stringToMatch='stats'
+          onMatch={() => setScreen('Stats')}
+        />
+        <MenuOptionText
+          stringToMatch='shop'
+          onMatch={() => setScreen('Shop')}
+        />
+        <HelperText />
+      </View>
     </>
   );
 }

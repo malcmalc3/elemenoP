@@ -32,6 +32,9 @@ export default function RootComponent() {
     <View>
       <View style={{
         paddingTop: insets.top,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingBottom: insets.bottom,
         height: (window.height - keyboardHeight),
         backgroundColor: '#00BCFF',
       }}>
