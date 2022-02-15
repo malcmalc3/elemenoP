@@ -1,6 +1,13 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
-import { Animated } from 'react-native';
+import { useCallback, useContext, useState } from 'react';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  withDelay,
+  withRepeat,
+  withSequence,
+  withTiming
+} from 'react-native-reanimated';
 
 import { Icon, Text, ThemeContext } from 'react-native-elements';
 
@@ -14,54 +21,56 @@ const helperTexts = [
 export default function HelperText() {
   const { theme } = useContext(ThemeContext);
 
-  const [showHelperText, setShowHelperText] = useState(false);
   const [currentHelperText, setCurrentHelperText] = useState(0);
-  const [fadeAnimation] = useState(new Animated.Value(0));
 
-  const animateFading = () => {
-    Animated.sequence([
-      Animated.delay(500),
-      Animated.timing(fadeAnimation, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.delay(5000),
-      Animated.timing(fadeAnimation, {
-        toValue: 0,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      // Logic whenever an iteration finishes...
-      setCurrentHelperText((prev) => prev + 1 === helperTexts.length ? 0 : prev + 1);
+  const cycleHelperText = useCallback(() => {
+    setCurrentHelperText((prev) => {
+      if (prev + 1 === helperTexts.length) {
+        return 0;
+      }
+      return prev + 1
     });
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowHelperText(true);
-    }, 5000);
-    return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (showHelperText) {
-      animateFading();
-    }
-  }, [currentHelperText, showHelperText]);
-  
+  const fadeAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withSequence(
+        withTiming(0, { duration: 0 }),
+        withDelay(
+          1000,
+          withRepeat(
+            withSequence(
+              withDelay(500, withTiming(1, { duration: 1000 })),
+              withDelay(5000, withTiming(0, { duration: 1000 }, () => runOnJS(cycleHelperText)())),
+            ),
+            -1,
+          ),
+        ),
+      ),
+    };
+  });
+
   return (
     <Animated.View
-      style={{
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        opacity: fadeAnimation, //showHelper ? 1 : 0,
-        marginTop: 16,
-        marginBottom: 16,
-      }}>
-      <Icon type="feather" name='info' color={theme.colors?.grey5}/>
+      style={[
+        {
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginTop: 16,
+          marginBottom: 16,
+        },
+        fadeAnimatedStyle,
+      ]}
+    >
+      <Icon
+        type="feather"
+        name='info'
+        color={theme.colors?.grey5}
+        // TODO: Remove these two after upgrading to v4 of react-native-elements
+        hasTVPreferredFocus={undefined}
+        tvParallaxProperties={undefined}
+      />
       <Text
         style={{
           color: theme.colors?.grey5,
