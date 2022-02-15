@@ -47,14 +47,23 @@ interface GameCharProps {
   char: string;
   /** If true, this is the letter that the user is currently on */
   currentLetter: boolean;
+  /** Function to run when this character was typed correctly */
+  onCorrect: () => void;
+  /** Function to run when this character was typed incorrectly */
+  onIncorrect: () => void;
   /** If the user has typed this letter correctly or not. Undefined if they haven't gotten to it */
   userTypedCorrectly?: boolean;
+  /** Scrolls the list if the current letter is past the screen midpoint */
+  scrollList: () => void | undefined;
 }
 
 export default function GameChar({
   char,
   currentLetter,
+  onCorrect,
+  onIncorrect,
   userTypedCorrectly,
+  scrollList,
 }: GameCharProps) {
   const { theme } = useContext(ThemeContext);
 
@@ -109,12 +118,20 @@ export default function GameChar({
     if (userTypedCorrectly !== undefined) {
       if (userTypedCorrectly) {
         setPointValue(pointValues.correct);
+        onCorrect();
       } else {
         setPointValue(pointValues.incorrect);
+        onIncorrect();
       }
       setShowPoints(true);
     }
   }, [userTypedCorrectly]);
+
+  useEffect(() => {
+    if (currentLetter && scrollList) {
+      scrollList();
+    }
+  }, [currentLetter]);
   
   return (
     <>
