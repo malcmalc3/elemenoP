@@ -8,9 +8,9 @@ import BackButton from '../../../components/BackButton';
 import { useKeyboard } from '../../../contexts/KeyboardProvider';
 import GameChar from '../GameChar';
 import PlayerGameInfo from '../PlayerGameInfo';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { pointValues } from '../../../utils/points';
 import { useGameState } from '../../../contexts/GameStateProvider';
+import CountdownCircle from '../CountdownCircle/CountdownCircle';
 
 const paragraph = 'The hardest choices require the strongest wills';
 const paragraphArr = paragraph.split('');
@@ -109,7 +109,7 @@ export default function SoloPlay() {
         }}>
           <PlayerGameInfo isOpponent={false} />
           {gameMode !== "Solo" && (
-          <PlayerGameInfo isOpponent />
+            <PlayerGameInfo isOpponent />
           )}
       </View>
       <View
@@ -119,10 +119,9 @@ export default function SoloPlay() {
         }}>
           <Text h2 style={{ textAlign: 'center' }}>
             {`${points}${gameMode === "Solo" ? "" : " - 49"}`}
-            </Text>
-          )}
-        </CountdownCircleTimer>
+          </Text>
       </View>
+      <CountdownCircle />
       <View>
         <FlatList
           ref={(ref) => setFlatListRef(ref)}
