@@ -12,6 +12,7 @@ import StatsScreen from './StatsScreen/StatsScreen';
 import ShopScreen from './ShopScreen/ShopScreen';
 import SoloPlay from './PlayScreens/SoloPlay/SoloPlay';
 import VersusPlay from './PlayScreens/VersusPlay';
+import { GameStateProvider } from '../contexts/GameStateProvider';
 
 const styles = StyleSheet.create({
   separator: {
@@ -43,7 +44,11 @@ export default function RootComponent() {
         {currentScreen === 'How To' && (<HowToScreen />)}
         {currentScreen === 'Stats' && (<StatsScreen />)}
         {currentScreen === 'Shop' && (<ShopScreen />)}
-        {currentScreen === 'Solo Play' && (<SoloPlay />)}
+        {currentScreen === 'Solo Play' && (
+          <GameStateProvider>
+            <SoloPlay />
+          </GameStateProvider>
+        )}
         {currentScreen === 'Versus Play' && (<VersusPlay />)}
       </View>
     </View>

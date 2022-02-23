@@ -10,6 +10,7 @@ import GameChar from '../GameChar';
 import PlayerGameInfo from '../PlayerGameInfo';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { pointValues } from '../../../utils/points';
+import { useGameState } from '../../../contexts/GameStateProvider';
 
 const paragraph = 'The hardest choices require the strongest wills';
 const paragraphArr = paragraph.split('');
@@ -18,6 +19,11 @@ const START_SCROLL_OFFSET = 5;
 
 export default function SoloPlay() {
   const { lastKey, repeats } = useKeyboard();
+  const { gameMode, setGameState } = useGameState();
+
+  useEffect(() => {
+    setGameState("Starting");
+  }, [setGameState]);
 
   const flatListRef = useRef<FlatList<string> | null>(null);
   const setFlatListRef = useCallback((ref: FlatList<string> | null) => {
@@ -38,7 +44,7 @@ export default function SoloPlay() {
     setShowFader({
       start: offsetX > 0,
       end: contentSize.width - offsetX !== layoutWidth,
-    })
+    });
   }, []);
 
   const increasePosition = useCallback((amount: number) => {
@@ -102,40 +108,17 @@ export default function SoloPlay() {
           justifyContent: 'space-between',
         }}>
           <PlayerGameInfo isOpponent={false} />
+          {gameMode !== "Solo" && (
           <PlayerGameInfo isOpponent />
+          )}
       </View>
       <View
         style={{
           marginTop: 8,
           marginBottom: 8,
         }}>
-          {/* <Text h3 style={{ textAlign: 'center' }}>score</Text> */}
-          <Text h2 style={{ textAlign: 'center' }}>{`${points} - 49`}</Text>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingTop: 8,
-          paddingBottom: 8,
-        }}
-      >
-        <CountdownCircleTimer
-          isPlaying
-          duration={10}
-          colors={[
-            ['#FFFFFF', 0.7],
-            ['#FFFFFF', 0.1],
-            ['#FF0000', 0.2],
-          ]}
-          trailColor='orange'
-          size={140}
-        >
-          {({ remainingTime }) => (
-            <Text h2>
-              {remainingTime}
+          <Text h2 style={{ textAlign: 'center' }}>
+            {`${points}${gameMode === "Solo" ? "" : " - 49"}`}
             </Text>
           )}
         </CountdownCircleTimer>
