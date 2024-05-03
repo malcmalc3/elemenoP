@@ -19,9 +19,6 @@ export const useDimensions = (): UseDimensionsReturn => {
 
   useEffect(() => {
     Dimensions.addEventListener("change", onChange);
-    return () => {
-      Dimensions.removeEventListener("change", onChange);
-    };
   });
 
   return dimensions;

@@ -10,7 +10,7 @@ function useAsyncStorage(key: string, initialValue: any) {
         return JSON.parse(value);
       })
       .then(setStoredValue)
-  }, [key, initialValue]);
+  }, [key]);
 
   const setValue = (value: any) => {
     const valueToStore = value instanceof Function ? value(storedValue) : value;

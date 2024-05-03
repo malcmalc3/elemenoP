@@ -30,27 +30,27 @@ export default function RootComponent() {
   const { currentScreen } = useNavigation();
   
   return (
-    <View>
-      <View style={{
-        paddingTop: insets.top,
-        paddingLeft: 12,
-        paddingRight: 12,
-        paddingBottom: insets.bottom,
-        height: (window.height - keyboardHeight),
-        backgroundColor: '#00BCFF',
-      }}>
-        {currentScreen === 'Main Menu' && (<MainMenu />)}
-        {currentScreen === 'Play Menu' && (<PlayMenu />)}
-        {currentScreen === 'How To' && (<HowToScreen />)}
-        {currentScreen === 'Stats' && (<StatsScreen />)}
-        {currentScreen === 'Shop' && (<ShopScreen />)}
-        {currentScreen === 'Solo Play' && (
-          <GameStateProvider>
-            <SoloPlay />
-          </GameStateProvider>
-        )}
-        {currentScreen === 'Versus Play' && (<VersusPlay />)}
+    <GameStateProvider>
+      <View>
+        <View style={{
+          paddingTop: insets.top,
+          paddingLeft: 12,
+          paddingRight: 12,
+          paddingBottom: insets.bottom,
+          height: (window.height - keyboardHeight),
+          backgroundColor: '#00BCFF',
+        }}>
+          {currentScreen === 'Main Menu' && (<MainMenu />)}
+          {currentScreen === 'Play Menu' && (<PlayMenu />)}
+          {currentScreen === 'How To' && (<HowToScreen />)}
+          {currentScreen === 'Stats' && (<StatsScreen />)}
+          {currentScreen === 'Shop' && (<ShopScreen />)}
+          {currentScreen === 'Solo Play' && (
+              <SoloPlay />
+          )}
+          {currentScreen === 'Versus Play' && (<VersusPlay />)}
+        </View>
       </View>
-    </View>
+    </GameStateProvider>
   );
 }

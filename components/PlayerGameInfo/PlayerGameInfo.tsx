@@ -2,6 +2,8 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useUserProfile } from '../../contexts/UserProfileProvider';
+import { useGameState } from '../../contexts/GameStateProvider';
+import InGameStatText from './InGameStatText';
 
 interface PlayerGameInfoProps {
   isOpponent: boolean;
@@ -11,7 +13,8 @@ export default function PlayerGameInfo({
   isOpponent,
 }: PlayerGameInfoProps) {
   const { username } = useUserProfile();
-
+  const { gameMode } = useGameState();
+  
   return (
     <>
       <View
@@ -27,21 +30,22 @@ export default function PlayerGameInfo({
           flex: 1,
         }}
       >
-          <View>
-            <Text style={{ fontSize: 18, textAlign: 'center' }}>
-              {isOpponent ? 'opp' : username}
-            </Text>
-          </View>
-          <View>
-            <Text style={{ fontSize: 18, textAlign: 'center' }}>
-              {`win%   ${isOpponent ? 31 : 87}`}
-            </Text>
-          </View>
-          <View>
-            <Text style={{ fontSize: 18, textAlign: 'center' }}>
-              {`wpm   ${isOpponent ? 12 : 46}`}
-            </Text>
-          </View>
+        {gameMode !== 'Solo' && (
+          <>
+            <View>
+              <Text style={{ fontSize: 18, textAlign: 'center' }}>
+                {isOpponent ? 'opp' : username}
+              </Text>
+            </View>
+            <View>
+              <Text style={{ fontSize: 18, textAlign: 'center' }}>
+                {`win%   ${isOpponent ? 31 : 87}`}
+              </Text>
+            </View>
+          </>
+        )}
+        <InGameStatText isCurrentUser={!isOpponent} statType='WORDS_PER_MINUTE' />
+        <InGameStatText isCurrentUser={!isOpponent} statType='SCORE' />
       </View>
     </>
   );

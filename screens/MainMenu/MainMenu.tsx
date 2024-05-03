@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MenuOptionText from '../../components/MenuOptionText';
 import { useNavigation } from '../../contexts/NavigationProvider';
 import HelperText from './HelperText';
+import { useGameState } from '../../contexts/GameStateProvider';
 
 const styles = StyleSheet.create({
   titleText: {
@@ -21,6 +22,12 @@ export default function MainMenu() {
   const { theme } = useContext(ThemeContext);
 
   const { setScreen } = useNavigation();
+  const { setGameMode } = useGameState();
+
+  const handleSoloPlayClick = () => {
+    setGameMode('Solo');
+    setScreen('Solo Play')
+  }
   
   return (
     <>
@@ -47,7 +54,7 @@ export default function MainMenu() {
       }}>
         <MenuOptionText
           stringToMatch='play'
-          onMatch={() => setScreen('Play Menu')}
+          onMatch={handleSoloPlayClick}
         />
         <MenuOptionText
           stringToMatch='how to'

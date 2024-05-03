@@ -35,25 +35,25 @@ export default function PlayMenu() {
         }}
       >
         <MenuOptionText
+          stringToMatch='solo'
+          onMatch={() => setScreen('Solo Play')}
+          active={!editingName}
+        />
+        <MenuOptionText
           stringToMatch='online'
           onMatch={() => setScreen('Versus Play')}
           active={!editingName}
         />
         <MenuOptionText
-          stringToMatch='host private'
+          stringToMatch='type with friends'
           onMatch={() => setScreen('Versus Play')}
           active={!editingName}
         />
-        <MenuOptionText
+        {/* <MenuOptionText
           stringToMatch='join private'
           onMatch={() => setScreen('Versus Play')}
           active={!editingName}
-        />
-        <MenuOptionText
-          stringToMatch='solo'
-          onMatch={() => setScreen('Solo Play')}
-          active={!editingName}
-        />
+        /> */}
         <Text h2 style={{opacity: 0}}>Filler</Text>
         <EditNameField
           editingName={editingName}
